@@ -21,14 +21,14 @@ jobs:
       run: mvn clean package
       
     - name: Deploy to UTServer
-      uses: appleboy/scp-action@v0.1.7
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
-        host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
+        server: ${{ secrets.SSH_HOST }}
+        port: 22
         password: ${{ secrets.SSH_PASSWORD }}
-        port: 8080
-        source: "target/*.jar"
-        target: "~/apps/spring-service"
+        local_path: './target/*.jar'
+        remote_path: '~/apps/spring-service'
         
     - name: Restart Application
       uses: appleboy/ssh-action@v1.2.1
@@ -36,7 +36,7 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
-        port: 8080
+        port: 22
         script: |
           cd ~/apps/spring-service
           pkill -f UTServer || true
