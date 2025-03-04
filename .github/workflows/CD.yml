@@ -20,15 +20,14 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
       
-    - name: Deploy to UTServer
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+    - name: Deploy using FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        username: ${{ secrets.SSH_USERNAME }}
-        server: ${{ secrets.SSH_HOST }}
-        port: 2222
-        password: ${{ secrets.SSH_PASSWORD }}
-        local_path: './target/*.jar'
-        remote_path: '~/apps/spring-service'
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./target/
+        server-dir: ~/apps/spring-service/
         
     - name: Restart Application
       uses: appleboy/ssh-action@v1.2.1
