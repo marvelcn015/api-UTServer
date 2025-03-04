@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Set up JDK 21.0.6
       uses: actions/setup-java@v2
@@ -21,7 +21,7 @@ jobs:
       run: mvn clean package
       
     - name: Deploy to UTServer
-      uses: appleboy/scp-action@v1.2.1
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
