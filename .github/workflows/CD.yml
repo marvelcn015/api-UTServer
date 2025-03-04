@@ -2,7 +2,7 @@ name: Build JAR and Deploy to UTServer
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       run: mvn clean package
       
     - name: Deploy to UTServer
-      uses: appleboy/scp-action@master
+      uses: appleboy/scp-action@v1.2.1
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
@@ -31,7 +31,7 @@ jobs:
         target: "~/apps/spring-service"
         
     - name: Restart Application
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.2.1
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
